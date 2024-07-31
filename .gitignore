@@ -1,0 +1,41 @@
+# Node modules
+node_modules/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Dependencias de compilación
+dist/
+build/
+out/
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
+
+# Archivos temporales
+*.tmp
+*.swp
+
+# Archivos de entorno
+.env
+.env.local
+.env.*.local
+
+# Archivos de configuración del editor
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Directorios de compilación y caché
+.next/
+.cache/
+.vite/
+public/
+
+# Directorios específicos del entorno de despliegue
+.vercel/
