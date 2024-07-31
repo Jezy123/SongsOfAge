@@ -4,8 +4,8 @@ const port = 3000;
 
 // Configurar el motor de plantillas
 app.use(express.json());
-app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
 const jsonData = require('./contenido.json');
 
 
@@ -13,6 +13,9 @@ const jsonData = require('./contenido.json');
 app.use(express.static('public'));  // Para servir archivos estáticos
 
 // Ruta principal que renderiza la vista índice
+app.get('/',(req,res)=>{
+    res.send('Contenido protegido');
+})
 app.get('/:title', (req, res) => {
     let titulo = req.params.title;
     const index = jsonData.findIndex(item => item.title === titulo);
