@@ -3,8 +3,9 @@ const app = express();
 const port = 3000;
 
 // Configurar el motor de plantillas
+app.use(express.json());
 app.set('view engine', 'ejs');
-app.set('views', './views');
+app.set('views', path.join(__dirname, 'views'));
 const jsonData = require('./contenido.json');
 
 
