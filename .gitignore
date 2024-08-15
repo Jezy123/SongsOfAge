@@ -35,7 +35,6 @@ Thumbs.db
 .next/
 .cache/
 .vite/
-public/
 
 # Directorios específicos del entorno de despliegue
 .vercel/
