@@ -9,11 +9,11 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 const jsonData = require('./contenido.json');
-const { url } = require('inspector');
+
 
 
 // Configurar middleware
-app.use(express.static('public'));  // Para servir archivos estáticos
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Ruta principal que renderiza la vista índice
 app.get('/',(req,res)=>{
@@ -22,9 +22,7 @@ app.get('/',(req,res)=>{
 app.get('/:title', (req, res) => {
     let titulo = req.params.title;
     const index = jsonData.findIndex(item => item.title === titulo);
-    urlInfo = jsonData[index].url
-    console.log(urlInfo)
-  res.render('index', { url : urlInfo});  // Renderiza el archivo 'index.ejs' en el directorio 'views'
+  res.render('index', { url : jsonData[index].url});  // Renderiza el archivo 'index.ejs' en el directorio 'views'
 });
 
 // Iniciar el servidor
