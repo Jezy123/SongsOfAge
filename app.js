@@ -7,7 +7,9 @@ const port = 3000;
 app.use(express.json());
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+
 const jsonData = require('./contenido.json');
+const { url } = require('inspector');
 
 
 // Configurar middleware
@@ -20,9 +22,9 @@ app.get('/',(req,res)=>{
 app.get('/:title', (req, res) => {
     let titulo = req.params.title;
     const index = jsonData.findIndex(item => item.title === titulo);
-
-    
-  res.render('index', { url : jsonData[index].url});  // Renderiza el archivo 'index.ejs' en el directorio 'views'
+    urlInfo = jsonData[index].url
+    console.log(urlInfo)
+  res.render('index', { url : urlInfo});  // Renderiza el archivo 'index.ejs' en el directorio 'views'
 });
 
 // Iniciar el servidor
