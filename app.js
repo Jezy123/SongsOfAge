@@ -17,7 +17,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Ruta principal que renderiza la vista índice
 app.get('/',(req,res)=>{
-    res.send('Contenido protegido');
+    res.render('inicio');
 })
 app.get('/:title', (req, res) => {
     let titulo = req.params.title;
