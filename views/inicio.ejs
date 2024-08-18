@@ -1,57 +1,116 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi Página Web</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>BeatQuest</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2366776826018395"
-     crossorigin="anonymous"></script>
+        crossorigin="anonymous"></script>
 </head>
+
 <body>
-    <header>
-        <h1>Bienvenido a Mi Página Web</h1>
-        <nav>
-            <ul>
-                <li><a href="#home">Inicio</a></li>
-                <li><a href="#about">Sobre Nosotros</a></li>
-                <li><a href="#contact">Contacto</a></li>
-            </ul>
-        </nav>
-    </header>
+    <nav class="navbar navbar-expand-lg navbar bg-dark">
+        <div class="container-fluid">
+            <!-- Texto a la izquierda -->
+            <span class="navbar-text text-white"></span>
+            <h1 class="text-white">BeatQuest</h1>
+            </span>
 
-    <main>
-        <section id="home">
-            <h2>Inicio</h2>
-            <p>Este es el contenido principal de mi sitio web. Aquí puedes añadir artículos, blogs o cualquier otro tipo de contenido útil y original.</p>
-        </section>
 
-        <section id="about">
-            <h2>Sobre Nosotros</h2>
-            <p>Aquí puedes hablar sobre el propósito de tu sitio web, tus valores, y quién eres.</p>
-        </section>
+            <div class="d-flex ms-auto">
+                <a class="navbar-brand" href="#">
+                    <img src="https://via.placeholder.com/40" alt="Logo" class="d-inline-block align-text-top">
+                </a>
+            </div>
+        </div>
+    </nav>
 
-        <section id="contact">
-            <h2>Contacto</h2>
-            <p>Puedes ponerte en contacto con nosotros a través del siguiente correo electrónico: <a href="mailto:contacto@micpaginaweb.com">contacto@micpaginaweb.com</a></p>
-        </section>
+    <div class="container">
+        <main class="mt-3">
 
-        <aside>
-            <!-- Aquí puedes colocar los anuncios de Google AdSense -->
-            <h3>Anuncios</h3>
-            <!-- Ejemplo de código de anuncio de AdSense -->
-          
-            <script>
-                (adsbygoogle = window.adsbygoogle || []).push({
-                    google_ad_client: "ca-pub-XXXXXX",  // Reemplaza con tu ID de cliente de AdSense
-                    enable_page_level_ads: true
-                });
-            </script>
-        </aside>
-    </main>
+            <div class="accordion" id="accordionExample">
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            ¿Quienes somos?
+                        </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            <strong> Somos Alpaca Company </strong> <br><br>
+
+                                Somos Alpaca Company, una pequeña empresa de reciente creación, dedicada a la innovación en el mundo de los juegos de mesa. Nuestro objetivo es fusionar lo mejor de las aplicaciones digitales con el mundo físico para crear experiencias de juego únicas y envolventes. Nos apasiona la idea de que la tecnología no solo puede entretener, sino también fomentar la socialización y la conexión entre personas de todas las edades.<br><br>
+
+                                En Alpaca Company, creemos que los juegos de mesa pueden ser una poderosa herramienta para unir a niños, jóvenes y adultos, ofreciendo una alternativa divertida y educativa al entretenimiento digital tradicional. A través de nuestras propuestas, buscamos no solo entretener, sino también desarrollar habilidades sociales, estratégicas y cognitivas, todo ello mientras promovemos el uso responsable y creativo de la tecnología.<br><br>
+
+                                Nuestros juegos están diseñados para ofrecer experiencias interactivas que integran elementos físicos y digitales de manera innovadora. Ya sea utilizando aplicaciones móviles que complementan la experiencia de juego o creando tableros y piezas que interactúan con dispositivos electrónicos, nuestro enfoque está en llevar la diversión al siguiente nivel, respetando la esencia de los juegos de mesa tradicionales.<br><br>
+
+                                En Alpaca Company, nos esforzamos por ser más que un simple creador de juegos. Queremos ser un puente entre lo tradicional y lo moderno, ofreciendo a nuestros jugadores nuevas formas de conectar, aprender y, sobre todo, disfrutar juntos. Únete a nosotros en este emocionante viaje hacia el futuro de los juegos de mesa.<br>
+                                                        
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            Contáctanos
+                        </button>
+                    </h2>
+                    <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            <strong>¿Dónde puedes encontrarnos?</strong><br><br>
+                            Actualmente, no contamos con una sede física. Sin embargo, a medida que nuestra empresa crezca, planeamos establecer una ubicación presencial. Mientras tanto, estamos a tu disposición a través del correo electrónico: <a href="mailto:informacion@beatquest.alpaca.com">informacion@beatquest.alpaca.com</a>. ¡No dudes en contactarnos!
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                            ¿Dónde puedo comprar vuestro juego?
+                        </button>
+                    </h2>
+                    <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            <strong>Actualmente, el juego no está disponible para la compra.</strong><br><br>
+                            Estamos trabajando arduamente para lanzarlo próximamente. Cuando esté disponible, podrás adquirirlo por $15 más los costes de envío. Además, también ofreceremos expansiones únicas y la oportunidad de darnos tu feedback. ¡Mantente atento para no perderte ninguna novedad!
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                            ¿Puedo solicitar modificaciones al juego?
+                        </button>
+                    </h2>
+                    <div id="collapseFour" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            <strong>¡Por supuesto!</strong><br><br>
+                            En Alpaca Company, podemos personalizar el juego para ti por un costo adicional. Podemos incorporar canciones, temáticas, géneros o cualquier otro contenido que prefieras. No dudes en ponerte en contacto con nosotros para obtener más información sobre cómo personalizar tu experiencia de juego.
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+
+        </main>
+    </div>
+
 
     <footer>
-        <p>&copy; 2024 Mi Página Web. Todos los derechos reservados.</p>
+        <p>&copy; 2024 BeatQuest Web. Todos los derechos reservados.</p>
     </footer>
 </body>
+
 </html>
