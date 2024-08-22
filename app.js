@@ -19,11 +19,35 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.get('/',(req,res)=>{
     res.render('inicio');
 })
-app.get('/:title', (req, res) => {
-    let titulo = req.params.title;
-    const index = jsonData.findIndex(item => item.title === titulo);
-  res.render('index', { url : jsonData[index].url});  // Renderiza el archivo 'index.ejs' en el directorio 'views'
-});
+
+
+app.get('/listarcanciones',(req,res)=>{
+  res.render('listarCanciones',{canciones : jsonData});
+})
+
+app.get('/:title', async (req, res) => {
+  try {
+      let titulo = req.params.title;
+
+      // No es necesario hacer await aquí ya que jsonData ya está disponible
+      const index = jsonData.findIndex(item => item.title === titulo);
+
+      if (index === -1) {
+          // Si no se encuentra el elemento, enviar una respuesta 404
+          return res.status(404).send('No se encontró el título');
+      }
+
+      let urlD = jsonData[index].url;
+
+      // Renderizar la página solo después de asegurar que se encontró la URL
+      res.render('index', { url: urlD });
+
+  } catch (error) {
+      // Manejar cualquier error inesperado
+      console.error(error);
+      res.status(500).send('Ocurrió un error en el servidor');
+  }
+})
 
 // Iniciar el servidor
 app.listen(port, () => {

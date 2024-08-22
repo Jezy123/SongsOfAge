@@ -12,6 +12,58 @@
         crossorigin="anonymous"></script>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2366776826018395"
         crossorigin="anonymous"></script>
+
+        <link rel="preload" href="fondo1.svg" as="image">
+        <link rel="preload" href="fondo2.svg" as="image">
+    <style>
+       
+
+
+        @keyframes changeBackground {
+            0% {
+                background-image: url("fondo1.svg");
+            }
+            50% {
+                background-image: url("fondo1.svg");
+            }
+            100% {
+                background-image: url("fondo2.svg");
+            }
+        }
+
+        .descarga::before{
+            background-image: url("fondo1.svg"), url("fondo2.svg");
+        }
+        .descarga{
+            height: 35rem;
+            border-style: solid;
+            border-width: 5px;
+             
+            animation: changeBackground 3s infinite alternate; /* Duración y alternancia de la animación */
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            margin: 0;
+            
+        }
+        #downloadBtn{
+            background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(9, 9, 121, 1) 35%, rgba(0, 212, 255, 1) 100%);
+            background-size: 200% 200%; /* Hacemos que el fondo sea más grande para moverlo */
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-position 2s ease, transform 1s ease;
+
+        }
+        #downloadBtn:hover {
+            background-position: 100% 0;
+            transform: scale(1.1);
+
+        }
+    </style>
 </head>
 
 <body>
@@ -25,7 +77,7 @@
 
             <div class="d-flex ms-auto">
                 <a class="navbar-brand" href="#">
-                    <img src="https://via.placeholder.com/40" alt="Logo" class="d-inline-block align-text-top">
+                    <img src="interrogante.png" alt="Logo" class="d-inline-block align-text-top" style="height: 35px;">
                 </a>
             </div>
         </div>
@@ -100,8 +152,30 @@
                             En Alpaca Company, podemos personalizar el juego para ti por un costo adicional. Podemos incorporar canciones, temáticas, géneros o cualquier otro contenido que prefieras. No dudes en ponerte en contacto con nosotros para obtener más información sobre cómo personalizar tu experiencia de juego.
                         </div>
                     </div>
+                    
+                </div>
+
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                            ¿Que canciones tenemos?
+                        </button>
+                    </h2>
+                    <div id="collapseFive" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            <strong>Actualmente el juego contien 120 canciones </strong><br><br>
+                            Aunque actualmente el juego solo contiene 120 canciones posemes la sigueinte cantidad de canciones añadidas 
+                            <a href="/listarcanciones"> CANCIONES </a>
+                        </div>
+                    </div>
+                    
                 </div>
                 
+            </div>
+
+            <div class="d-flex justify-content-center align-items-center mt-3 descarga">
+                <button id="downloadBtn" class="btn btn-primary">Descargar APK</button>
             </div>
 
         </main>
@@ -112,5 +186,13 @@
         <p>&copy; 2024 BeatQuest Web. Todos los derechos reservados.</p>
     </footer>
 </body>
+<script>
+    document.getElementById("downloadBtn").addEventListener("click", function() {
+        var link = document.createElement("a");
+        link.href = "BeatQuest.apk"; // Cambia esta ruta por la URL de tu APK
+        link.download = "BeatQuest.apk"; // Nombre del archivo a descargar
+        link.click();
+    });
+</script>
 
 </html>
