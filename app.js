@@ -25,6 +25,20 @@ app.get('/listarcanciones',(req,res)=>{
   res.render('listarCanciones',{canciones : jsonData});
 })
 
+app.get('/download', (req, res) => {
+  // Ruta al archivo APK en tu servidor
+  const filePath = 'BeatQuest.apk';
+
+  // Enviar el archivo para su descarga
+  res.download(filePath, (err) => {
+    if (err) {
+      console.error('Error al descargar el archivo:', err);
+      res.status(500).send('Error al descargar el archivo');
+    }
+  });
+});
+
+
 app.get('/:title', async (req, res) => {
   try {
       let titulo = req.params.title;
