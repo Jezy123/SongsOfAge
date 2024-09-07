@@ -27,7 +27,7 @@ app.get('/listarcanciones',(req,res)=>{
 
 app.get('/download', (req, res) => {
   // Ruta al archivo APK en tu servidor
-  const filePath = 'BeatQuest.apk';
+  const filePath = './public/BeatQuest.apk';
 
   // Enviar el archivo para su descarga
   res.download(filePath, (err) => {
