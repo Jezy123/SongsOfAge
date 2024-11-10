@@ -67,11 +67,7 @@
         .flecha{
             height: 100px;
             width: 100px;
-            
-            
-           
-           
-         
+                    
         }
         #flechaApunta{
             height: 50px;
@@ -80,6 +76,7 @@
             animation: bajar 3s ease-in-out infinite;
             
         }
+       
         @keyframes bajar {
             0%{
                 top:10px;
@@ -93,6 +90,50 @@
                 top: 10px;
             }
         }
+
+        .btn-gradient-1 {
+      background: linear-gradient(45deg, #ff7e5f, #feb47b);
+      color: white;
+      border: none;
+    }
+
+    .btn-gradient-2 {
+      background: linear-gradient(45deg, #6a11cb, #2575fc);
+      color: white;
+      border: none;
+    }
+
+    .btn-gradient-3 {
+      background: linear-gradient(45deg, #ff9a9e, #fad0c4);
+      color: white;
+      border: none;
+    }
+
+    .btn-gradient-4 {
+      background: linear-gradient(45deg, #43cea2, #185a9d);
+      color: white;
+      border: none;
+    }
+
+    /* Hover Effects */
+    .btn-gradient-1:hover {
+      background: linear-gradient(45deg, #feb47b, #ff7e5f);
+    }
+
+    .btn-gradient-2:hover {
+      background: linear-gradient(45deg, #2575fc, #6a11cb);
+    }
+
+    .btn-gradient-3:hover {
+      background: linear-gradient(45deg, #fad0c4, #ff9a9e);
+    }
+
+    .btn-gradient-4:hover {
+      background: linear-gradient(45deg, #185a9d, #43cea2);
+    }
+    .btn{
+        height: 8rem;
+    }
 
 
     </style>
@@ -117,6 +158,22 @@
 
     <div class="container">
         <main class="mt-3">
+            <div class="row mb-3">
+                
+                <div class="col-lg-3 col-6">
+                    <button class="btn btn-gradient-1 w-100 p-2"><h3>Instrucciones</h3></button>
+                </div>
+                <div class="col-lg-3 col-6">
+                    <button class="btn btn-gradient-2 w-100 p-2"><h3>Instrucciones</h3></button>
+                </div>
+                <div class="col-lg-3 col-6">
+                    <button class="btn btn-gradient-3 w-100 p-2"><h3>Instrucciones</h3></button>
+                </div>
+                <div class="col-lg-3 col-6">
+                    <button class="btn btn-gradient-4 w-100 p-2"><h3>Comprar nuestros productos</h3></button>
+                </div>
+                  
+            </div>
 
             <div class="accordion" id="accordionExample">
                 <div class="accordion-item">
@@ -141,6 +198,7 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="accordion-item">
                     <h2 class="accordion-header">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"

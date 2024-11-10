@@ -19,6 +19,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.get('/',(req,res)=>{
     res.render('inicio');
 })
+app.get('/instrucciones',(req,res)=>{
+  res.render('instrucciones');
+})
 
 
 app.get('/listarcanciones',(req,res)=>{
