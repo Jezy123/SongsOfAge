@@ -10,50 +10,108 @@
             integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
             crossorigin="anonymous"></script>
     </head>
+    <style>
+        body{
+            background: linear-gradient(135deg, #d3e9ff, #ecd7ff);
+        }
+   
+        
+    </style>
     <body>
-        <div class="container">
-            <h1 class="mt-2">Instrucciones del juego</h1>
-         
-            <div class="row">
-                <div class="col-lg-10 col-8">
-                    <h3 class="mt-3">Principio del juego</h3>
-                    <p>Cada jugador roba una carta el mazo al inicio de la partida y la enseña posicionandola como primera carta del juego. Las cartas representan canciones de distintos años</p>
+        <body>
+            <nav class="navbar navbar-expand-lg navbar bg-dark">
+                <div class="container-fluid">
+                    <!-- Texto a la izquierda -->
+                    <span class="navbar-text text-white"></span>
+                    <h1 class="text-white">BeatQuest</h1>
+                    </span>
+        
+        
+                    <div class="d-flex ms-auto">
+                        <a class="navbar-brand" href="/">
+                            <img src="interrogante.png" alt="Logo" class="d-inline-block align-text-top" style="height: 35px;">
+                        </a>
+                    </div>
                 </div>
-                <div class="col-lg-2 col-4 d-flex justify-content-center align-items-center">
-                    <img src="cartaE1.png" alt="Logo" class="d-inline-block align-text-top w-100" >
-                </div>
-            </div>
+            </nav>
+
+            <div class="container">
+                <h1 class="mt-2 mb-4 text-center ">Instrucciones del Juego</h1>
+                <div class="border rounded bg-white mt-1 shadow-lg">
+                    
+                    <!-- Principio del juego -->
+                    <div class="row mb-4 p-3 ">
+                        <div class="col-lg-10 col-8">
+                            <h3 class="mt-3">Principio del juego</h3>
+                            <p>Cada jugador roba una carta del mazo al inicio de la partida y la enseña posicionándola como la primera carta del juego. Las cartas representan canciones de distintos años.</p>
+                        </div>
+                        <div class="col-lg-2 col-4 d-flex justify-content-center align-items-center">
+                            <img src="cartaE1.png" alt="Ejemplo Carta" class="img-fluid rounded">
+                        </div>
+                    </div>
+                    <div class="ps-3">
+                        <h3 class="mt-3">Juego por turnos</h3>
+                        <p>El juego se juega por turnos. En cada turno, un jugador roba una nueva carta del mazo.</p>
+                    </div>
+               
+                    <div class="row mb-4 p-3 ">
+                        <div class="col-lg-10 col-8">
+                            <h3 class="mt-3">Escanea y escucha</h3>
+                            <p>Durante el turno, otro jugador deberá escanear el código QR de tu carta utilizando nuestra app oficial. Al escanearlo, la canción correspondiente sonará. Escucha atentamente para intentar recordar o adivinar en qué año fue lanzada.</p>
+                        </div>
+                        <div class="col-lg-2 col-4 d-flex justify-content-center align-items-center">
+                            <img src="cartaE2.png" alt="Ejemplo Escaneo" class="img-fluid rounded">
+                        </div>
+                    </div>
+                    <div class="ps-3">
+                        <!-- Ordena por años -->
+                        <h3 class="mt-3">Ordena por años</h3>
+                        <p>Tu objetivo es colocar tu carta en la fila de cartas previamente jugadas, en el lugar que creas correcto según el año de lanzamiento de la canción. Colócala al principio, al final o entre otras cartas, según corresponda.</p>
+                        <div class="text-center mb-3">
+                            <img src="cartaE4.png" alt="Ejemplo Orden" class="img-fluid rounded w-75 ">
+                        </div>
+                    </div>
             
-            <h3 class="mt-3">Juego por turnos</h3>
-            <p> El juego se juega por turnos. En cada turno, un jugador roba una nueva del mazo</p>
-
-            <div class="row">
-                <div class="col-lg-10 col-8">
-                    <h3 class="mt-3">Escanea y escucha</h3>
-                    <p>Durante el turno, otro jugador deberá escanear el código QR de tu carta utilizando nuestra app ofiicial. Al ecanearlo, la canción correpondiente sonara.
-                        Escucha atentamente para intetar recordar a adivinar en qué año fue lanzada
-                    </p>
-                </div>
-                <div class="col-lg-2 col-4 d-flex justify-content-center align-items-center">
-                    <img src="cartaE2.png" alt="Logo" class="d-inline-block align-text-top w-100" >
+                    <div class="ps-3">
+                        <!-- Verificación -->
+                    <h3 class="mt-3">Verificación</h3>
+                    <p>Cuando creas que has colocado la carta en el lugar correcto, gira la tarjeta para revelar el año de la canción. Si el año está bien ubicado en la línea temporal, te quedas la carta añadiéndola a la fila. Si no, tendrás que descartarla.</p>
+                    <div class="text-center mb-3">
+                        <img src="cartaE4.png" alt="Ejemplo Verificación" class="img-fluid rounded w-75 shadow">
+                    </div>
+                    </div>
+              
+            
+                    <!-- Objetivo del juego -->
+                    <h3 class="mt-3 ps-3 text-success">¡Gana el primer jugador con 10 cartas!</h3>
+            
+                    <!-- Descarga la app -->
+                    <div class="text-center mt-4 mb-5">
+                        <h2 class="mb-3">Descarga nuestra app oficial</h2>
+                        <p>Mejora la experiencia del juego y facilita el escaneo de las cartas.</p>
+                        <button id="downloadBtn" class="btn btn-primary btn-lg px-5">Descargar APK</button>
+                    </div>
                 </div>
             </div>
-
-            <h3 class="mt-3">Ordena por años</h3>
-            <p>Tu objetivo es colocar tu carta en la fila de cartas previamente jugadas, en el lugar que creas correcto según el año de lanzamiento de la canción.
-                Colócala al principio, al final o entre otras cartas, según corresponda.
-            </p>
-            <img src="cartaE4.png" alt="Logo" class="d-inline-block align-text-top w-100" >
-
-            <h3 class="mt-3">Verificación</h3>
-            <p>Cuando creas que has colocado la carta en el lugar correcto, gir la tarjeta para revelar el año de la cación. Si el año 
-                está bien ubicado en la línea temporal, te quedas la carta añadiendola a la fila. Si no, tendrás que descartarla.
-            </p>
-            <img src="cartaE4.png" alt="Logo" class="d-inline-block align-text-top w-100" >
-            <h3 class="mt-3"> Gana el Primer jugador con 10 cartas</h3>
-
-            <h2> Acuerdate de descarga nuestra app oficial para mejorar la experiencia del juego y facilitar el Escaneo de las cartas</h2>
-                        
-        </div>
-    </body>
+        
+            <!-- Footer -->
+            <footer class="bg-dark text-white text-center p-3 mt-5">
+                <p>&copy; 2024 BeatQuest Web. Todos los derechos reservados.</p>
+                <div>
+                    <a href="/" class="text-white me-3">Twitter</a>
+                    <a href="/" class="text-white">Facebook</a>
+                </div>
+            </footer>
+        
+            <!-- Script para botón de descarga -->
+            <script>
+                document.getElementById("downloadBtn").addEventListener("click", function() {
+                    var link = document.createElement("a");
+                    link.href = "BeatQuest.apk"; // Cambia esta ruta por la URL de tu APK
+                    link.download = "BeatQuest.apk"; // Nombre del archivo a descargar
+                    link.click();
+                });
+            </script>
+        </body>
+        
 </html>

@@ -23,6 +23,10 @@ app.get('/instrucciones',(req,res)=>{
   res.render('instrucciones');
 })
 
+app.get('/faqs',(req,res)=>{
+  res.render('faqs');
+})
+
 
 app.get('/listarcanciones',(req,res)=>{
   res.render('listarCanciones',{canciones : jsonData});
