@@ -24,6 +24,7 @@ const createSession = async (req, res) => {
     // Guardar datos temporalmente en la base de datos
     const client = new MongoClient(process.env.MongoDb);
     await client.connect();
+    console.log('Conectado a MOngoDb')
     const database = client.db('Envios');
     const collection = database.collection('Pedidos');
     const envioData = {
@@ -48,7 +49,7 @@ const createSession = async (req, res) => {
    
     let productData;
     let unitAmount;
-
+    console.log('Creacion de la peticion de pago segun url')
     if (productType === 'simple') {
       productData = {
         name: "Producto Simple",
@@ -67,7 +68,7 @@ const createSession = async (req, res) => {
     } else {
       return res.status(400).json({ error: 'Producto no válido' });
     }
-
+    console.log("creacion del pago")
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       line_items: [
