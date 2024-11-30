@@ -140,9 +140,6 @@
             jsonData[key] = value;
         });
 
-        jsonData.productType = productType;
-        console.log(JSON.stringify(jsonData))
-
         try {
             const response = await fetch('/create-checkout', {
             method: 'POST',
@@ -156,6 +153,7 @@
                 console.error('Error del servidor:', errorData); // Muestra los detalles del error
                 throw new Error(errorData.error || 'Error al procesar el pago');
             }
+
             const data = await response.json();
 
             // Redirigir al checkout
