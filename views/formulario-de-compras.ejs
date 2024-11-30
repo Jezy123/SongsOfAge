@@ -141,6 +141,7 @@
         });
 
         jsonData.productType = productType;
+        console.log(JSON.stringify(jsonData))
 
         try {
             const response = await fetch('/create-checkout', {
