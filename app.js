@@ -18,9 +18,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 const createSession = async (req, res) => {
-  //const { fullName, phone, addressLine1, addressLine2, city, state, country, postalCode, deliveryInstructions,productType, personalizado } = req.body;
+  const { fullName, phone, addressLine1, addressLine2, city, state, country, postalCode, deliveryInstructions,productType, personalizado } = req.body;
 
-  /*try {
+  try {
     // Guardar datos temporalmente en la base de datos
     const client = new MongoClient(process.env.MongoDb);
     await client.connect();
@@ -49,9 +49,7 @@ const createSession = async (req, res) => {
     let productData;
     let unitAmount;
     
-   */
-    let productType="simple"
-    console.log('Creacion de la peticion de pago segun url')
+      console.log('Creacion de la peticion de pago segun url')
     if (productType === 'simple') {
       productData = {
         name: "Producto Simple",
@@ -88,10 +86,10 @@ const createSession = async (req, res) => {
     });
 
     res.json({ url: session.url });
-  /*} catch (error) {
+  } catch (error) {
     console.error('Error al crear sesión de Stripe:', error);
     res.status(500).json({ error: 'No se pudo crear la sesión de pago' });
-  }*/
+  }
 };
 
 app.post('/create-checkout', express.json(), createSession);
