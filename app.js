@@ -48,7 +48,10 @@ const createSession = async (req, res) => {
    
     let productData;
     let unitAmount;
-   */ console.log('Creacion de la peticion de pago segun url')
+    
+   */
+    let productType="simple"
+    console.log('Creacion de la peticion de pago segun url')
     if (productType === 'simple') {
       productData = {
         name: "Producto Simple",
