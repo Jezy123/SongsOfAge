@@ -107,7 +107,6 @@ app.post('/create-checkout-session', async (req, res) => {
 
 // Endpoint de éxito
 app.get('/success', async (req, res) => {
-
   const sessionId = req.query.session_id;
 
   try {
@@ -115,7 +114,7 @@ app.get('/success', async (req, res) => {
     const session = await stripe.checkout.sessions.retrieve(sessionId);
 
     if (session.payment_status === 'paid') {
-      // Guardar datos en MongoDB
+      // Guardar datos en MongoDB en segundo plano
       const newOrder = {
         fullName: session.metadata.fullName,
         phone: session.metadata.phone,
@@ -130,12 +129,16 @@ app.get('/success', async (req, res) => {
         createdAt: new Date(),
         status: 'completed',
       };
-      const database = await connectDB(); // Reutilizamos la conexión
 
-      await database.collection('Pedidos').insertOne(newOrder);
-      console.log('Pedido guardado exitosamente en MongoDB:', newOrder);
+      // Enviar la respuesta al cliente antes de la operación en MongoDB
+      res.redirect('/gracias');
 
-      res.redirect('/gracias'); // Redirigir a la página de agradecimiento
+      // Guardar en MongoDB después de la respuesta (en segundo plano)
+      setImmediate(async () => {
+        const database = await connectDB(); // Reutilizamos la conexión
+        await database.collection('Pedidos').insertOne(newOrder);
+        console.log('Pedido guardado exitosamente en MongoDB:', newOrder);
+      });
     } else {
       res.status(400).send('El pago no fue exitoso.');
     }
@@ -144,6 +147,7 @@ app.get('/success', async (req, res) => {
     res.status(500).send('Error al verificar el pago.');
   }
 });
+
 
 // Página de agradecimiento
 app.get('/gracias', (req, res) => {
