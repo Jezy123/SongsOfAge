@@ -7,9 +7,9 @@ require('dotenv').config();
 app.use(express.json());
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
-const stripe = require('stripe')(process.env.STRIPE_KEY_TEST);
+const stripe = require('stripe')(process.env.STRIPE_KEY);
 const jsonData = require('./contenido.json');
-const { MongoClient, ObjectId  } = require('mongodb');
+//const { MongoClient, ObjectId  } = require('mongodb');
 app.use(express.static(path.join(__dirname, 'public')));
 const { createClient } = require('@supabase/supabase-js');
 
@@ -45,6 +45,7 @@ app.post('/create-checkout-session', async (req, res) => {
     postalCode,
     deliveryInstructions,
     productType,
+    personalizado,
   } = req.body;
 
   try {
@@ -97,6 +98,7 @@ app.post('/create-checkout-session', async (req, res) => {
         postalCode,
         deliveryInstructions,
         productType,
+        personalizado,
       },
     });
 
@@ -131,6 +133,7 @@ app.get('/success', async (req, res) => {
         product_type: session.metadata.productType,
         created_at: new Date(),
         status: 'completed',
+        instrucciones_personalizado: session.metadata.personalizado,
       };
 /*MongoDb
       const database = await connectDB(); // Reutilizamos la conexión
