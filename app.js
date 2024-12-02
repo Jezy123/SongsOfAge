@@ -11,55 +11,50 @@ app.set('view engine', 'ejs');
 const stripe = require('stripe')(process.env.STRIPE_KEY_TEST);
 const jsonData = require('./contenido.json');
 const { MongoClient, ObjectId  } = require('mongodb');
-const uri = process.env.MongoDb; // Accede a la variable segura
-const client = new MongoClient(uri);
 app.use(express.static(path.join(__dirname, 'public')));
 
+let db; 
+const connectDB = async () => {
+  if (!db) {
+    const uri = process.env.MongoDb;
+    const client = new MongoClient(uri);
+    try {
+      await client.connect();
+      db = client.db('Envios'); // Nombre de la base de datos
+      console.log('Conexión a MongoDB establecida');
+    } catch (error) {
+      console.error('Error al conectar a MongoDB:', error);
+      process.exit(1);
+    }
+  }
+  return db;
+};
 
+// Crear una sesión de pago
+app.post('/create-checkout-session', async (req, res) => {
+  const {
+    fullName,
+    phone,
+    addressLine1,
+    addressLine2,
+    city,
+    state,
+    country,
+    postalCode,
+    deliveryInstructions,
+    productType,
+  } = req.body;
 
-const createSession = async (req, res) => {
-  //const { fullName, phone, addressLine1, addressLine2, city, state, country, postalCode, deliveryInstructions,productType, personalizado } = req.body;
-
-  /*try {
-    // Guardar datos temporalmente en la base de datos
-    const client = new MongoClient(process.env.MongoDb);
-    await client.connect();
-    const database = client.db('Envios');
-    const collection = database.collection('Pedidos');
-    const envioData = {
-      fullName,
-      phone,
-      addressLine1,
-      addressLine2,
-      city,
-      state,
-      country,
-      postalCode,
-      deliveryInstructions,
-      productType,
-      personalizado,
-      createdAt: new Date(),
-      status: 'pending',
-    };
-    const result = await collection.insertOne(envioData);
-
-    // Obtener el ID del pedido recién creado
-    const orderId = result.insertedId.toString();
-   
+  try {
     let productData;
     let unitAmount;
-    
-   
-    console.log('Creacion de la peticion de pago segun url')
-    
-   */
-    let productType ="simple";
+
+    // Configuración del producto según el tipo
     if (productType === 'simple') {
       productData = {
         name: "Producto Simple",
         description: "Un producto básico para Beat Quest",
-        images: ["http://beatquest.site/caja.png"], // Para desarrollo local
-
+        images: ["http://beatquest.site/caja.png"],
       };
       unitAmount = 2000; // 20 EUR
     } else if (productType === 'personalizado') {
@@ -72,6 +67,8 @@ const createSession = async (req, res) => {
     } else {
       return res.status(400).json({ error: 'Producto no válido' });
     }
+
+    // Crear sesión de Stripe con metadata
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       line_items: [
@@ -79,82 +76,83 @@ const createSession = async (req, res) => {
           price_data: {
             currency: 'eur',
             product_data: productData,
-            unit_amount: unitAmount, // El precio se establece aquí
+            unit_amount: unitAmount,
           },
           quantity: 1,
         },
       ],
       mode: 'payment',
-      success_url: `${req.protocol}://${req.get('host')}/success`,
-      //success_url: `${req.protocol}://${req.get('host')}/success?id=${orderId}`,
+      success_url: `${req.protocol}://${req.get('host')}/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${req.protocol}://${req.get('host')}/cancel`,
-      //cancel_url: `${req.protocol}://${req.get('host')}/cancel?id=${orderId}`,
+      metadata: {
+        fullName,
+        phone,
+        addressLine1,
+        addressLine2,
+        city,
+        state,
+        country,
+        postalCode,
+        deliveryInstructions,
+        productType,
+      },
     });
 
     res.json({ url: session.url });
-  /*} catch (error) {
-    console.error('Error al crear sesión de Stripe:', error);
-    res.status(500).json({ error: 'No se pudo crear la sesión de pago' });
-  }*/
-};
+  } catch (error) {
+    console.error('Error al crear sesión de pago:', error);
+    res.status(500).json({ error: 'Error al crear la sesión de pago' });
+  }
+});
 
-app.post('/create-checkout', express.json(), createSession);
+// Endpoint de éxito
+app.get('/success', async (req, res) => {
 
-
-// Configurar middleware
-
-app.get('/success',async(req,res)=>{
-  const orderId = req.query.id;
+  const sessionId = req.query.session_id;
 
   try {
-    const client = new MongoClient(process.env.MongoDb);
-    await client.connect();
-    const database = client.db('Envios');
-    const collection = database.collection('Pedidos');
+    // Obtener detalles de la sesión desde Stripe
+    const session = await stripe.checkout.sessions.retrieve(sessionId);
 
-    // Buscar los datos del pedido con el ID proporcionado
-    const order = await collection.findOne({ _id: new ObjectId(orderId) });
-    const updateResult = await collection.updateOne(
-      { _id: new ObjectId(orderId) },
-      { $set: { status: 'paid', paymentDate: new Date() } } // Actualiza el status a "paid"
-    );
- 
-    if (!order) {
-      return res.status(404).send('No se encontraron datos para este pedido.');
+    if (session.payment_status === 'paid') {
+      // Guardar datos en MongoDB
+      const newOrder = {
+        fullName: session.metadata.fullName,
+        phone: session.metadata.phone,
+        addressLine1: session.metadata.addressLine1,
+        addressLine2: session.metadata.addressLine2,
+        city: session.metadata.city,
+        state: session.metadata.state,
+        country: session.metadata.country,
+        postalCode: session.metadata.postalCode,
+        deliveryInstructions: session.metadata.deliveryInstructions,
+        productType: session.metadata.productType,
+        createdAt: new Date(),
+        status: 'completed',
+      };
+      const database = await connectDB(); // Reutilizamos la conexión
+
+      await database.collection('Pedidos').insertOne(newOrder);
+      console.log('Pedido guardado exitosamente en MongoDB:', newOrder);
+
+      res.redirect('/gracias'); // Redirigir a la página de agradecimiento
+    } else {
+      res.status(400).send('El pago no fue exitoso.');
     }
-
-    res.render('success', { order });
   } catch (error) {
-    console.error('Error al recuperar los datos del pedido:', error);
-    res.status(500).send('Error al recuperar los datos del pedido.');
+    console.error('Error al procesar /success:', error);
+    res.status(500).send('Error al verificar el pago.');
   }
-})
+});
+
+// Página de agradecimiento
+app.get('/gracias', (req, res) => {
+  res.render('success');
+});
 
 app.get('/cancel', async (req, res) => {
-  const orderId = req.query.id; // Captura el ID del pedido si está disponible en la consulta
-
-  try {
-    if (orderId) {
-      const client = new MongoClient(process.env.MongoDb);
-      await client.connect();
-      const database = client.db('Envios');
-      const collection = database.collection('Pedidos');
-
-      // Eliminar el pedido de la base de datos
-      const deleteResult = await collection.deleteOne({ _id: new ObjectId(orderId) });
-
-      if (deleteResult.deletedCount === 0) {
-        console.log(`No se encontró el pedido con ID: ${orderId} para eliminar.`);
-      } else {
-        console.log(`Pedido con ID: ${orderId} eliminado correctamente.`);
-      }
-    }
-
     res.render('cancel');
-  } catch (error) {
-    console.error('Error al borrar el pedido cancelado:', error);
-    res.status(500).send('Error al procesar la cancelación del pedido.');
-  }
+
 });
 
 // Ruta principal que renderiza la vista índice
