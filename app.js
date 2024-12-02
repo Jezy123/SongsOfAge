@@ -3,7 +3,7 @@ const app = express();
 const path = require('path');
 const port = 3000;
 require('dotenv').config();
-
+const fs = require('fs');
 // Configurar el motor de plantillas
 app.use(express.json());
 app.set('views', path.join(__dirname, 'views'));
@@ -12,7 +12,9 @@ const stripe = require('stripe')(process.env.STRIPE_KEY_TEST);
 const jsonData = require('./contenido.json');
 const { MongoClient, ObjectId  } = require('mongodb');
 app.use(express.static(path.join(__dirname, 'public')));
+import { createClient } from '@supabase/supabase-js'
 
+/* MONGO DB
 let db; 
 const connectDB = async () => {
   if (!db) {
@@ -29,7 +31,7 @@ const connectDB = async () => {
   }
   return db;
 };
-
+*/
 // Crear una sesión de pago
 app.post('/create-checkout-session', async (req, res) => {
   const {
@@ -107,6 +109,7 @@ app.post('/create-checkout-session', async (req, res) => {
 
 // Endpoint de éxito
 app.get('/success', async (req, res) => {
+
   const sessionId = req.query.session_id;
 
   try {
@@ -114,7 +117,7 @@ app.get('/success', async (req, res) => {
     const session = await stripe.checkout.sessions.retrieve(sessionId);
 
     if (session.payment_status === 'paid') {
-      // Guardar datos en MongoDB en segundo plano
+      // Guardar datos en MongoDB
       const newOrder = {
         fullName: session.metadata.fullName,
         phone: session.metadata.phone,
@@ -129,16 +132,23 @@ app.get('/success', async (req, res) => {
         createdAt: new Date(),
         status: 'completed',
       };
+/*MongoDb
+      const database = await connectDB(); // Reutilizamos la conexión
+      await database.collection('Pedidos').insertOne(newOrder);
+      console.log('Pedido guardado exitosamente en MongoDB:', newOrder);
+*/    const supabase = createClient(process.env.supabaseUrl,process.env.supabaseKey)
+      const { data, error } = await supabase
+      .from('pedidos')
+      .insert([newOrder]);
 
-      // Enviar la respuesta al cliente antes de la operación en MongoDB
-      res.redirect('/gracias');
+      // Verificar si hubo un error en la inserción
+      if (error) {
+      console.error('Error al guardar el pedido en Supabase:', error);
+      return res.status(500).send('Error al guardar el pedido en la base de datos.');
+      }
 
-      // Guardar en MongoDB después de la respuesta (en segundo plano)
-      setImmediate(async () => {
-        const database = await connectDB(); // Reutilizamos la conexión
-        await database.collection('Pedidos').insertOne(newOrder);
-        console.log('Pedido guardado exitosamente en MongoDB:', newOrder);
-      });
+      console.log('Pedido guardado exitosamente en Supabase:', data);
+      res.redirect('/success'); // Redirigir a la página de agradecimiento
     } else {
       res.status(400).send('El pago no fue exitoso.');
     }
@@ -151,7 +161,7 @@ app.get('/success', async (req, res) => {
 
 // Página de agradecimiento
 app.get('/gracias', (req, res) => {
-  res.render('success');
+  res.redirect('success');
 });
 
 app.get('/cancel', async (req, res) => {
