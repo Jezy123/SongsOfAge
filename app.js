@@ -12,6 +12,8 @@ const jsonData = require('./contenido.json');
 //const { MongoClient, ObjectId  } = require('mongodb');
 app.use(express.static(path.join(__dirname, 'public')));
 const { createClient } = require('@supabase/supabase-js');
+const { Resend } =require('resend');
+
 
 
 /* MONGO DB
@@ -149,6 +151,13 @@ app.get('/success', async (req, res) => {
       console.error('Error al guardar el pedido en Supabase:', error);
       return res.status(500).send('Error al guardar el pedido en la base de datos.');
       }
+      const resend = new Resend(process.env.resend)
+      resend.emails.send({
+        from: 'onboarding@resend.dev',
+        to: 'juanmapg321@gmail.com',
+        subject: 'Pedido',
+        html: '<p>Tienes un nuevo pedido</strong>!</p>'
+      });
       res.redirect('/gracias'); // Redirigir a la página de agradecimiento
     } else {
       res.status(400).send('El pago no fue exitoso.');
