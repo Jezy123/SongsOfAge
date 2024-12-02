@@ -3,7 +3,6 @@ const app = express();
 const path = require('path');
 const port = 3000;
 require('dotenv').config();
-const fs = require('fs');
 // Configurar el motor de plantillas
 app.use(express.json());
 app.set('views', path.join(__dirname, 'views'));
@@ -12,7 +11,8 @@ const stripe = require('stripe')(process.env.STRIPE_KEY_TEST);
 const jsonData = require('./contenido.json');
 const { MongoClient, ObjectId  } = require('mongodb');
 app.use(express.static(path.join(__dirname, 'public')));
-import { createClient } from '@supabase/supabase-js'
+const { createClient } = require('@supabase/supabase-js');
+
 
 /* MONGO DB
 let db; 
@@ -119,17 +119,17 @@ app.get('/success', async (req, res) => {
     if (session.payment_status === 'paid') {
       // Guardar datos en MongoDB
       const newOrder = {
-        fullName: session.metadata.fullName,
+        full_name: session.metadata.fullName,
         phone: session.metadata.phone,
-        addressLine1: session.metadata.addressLine1,
-        addressLine2: session.metadata.addressLine2,
+        address_line1: session.metadata.addressLine1,
+        address_line2: session.metadata.addressLine2,
         city: session.metadata.city,
         state: session.metadata.state,
         country: session.metadata.country,
-        postalCode: session.metadata.postalCode,
-        deliveryInstructions: session.metadata.deliveryInstructions,
-        productType: session.metadata.productType,
-        createdAt: new Date(),
+        postal_code: session.metadata.postalCode,
+        delivery_instructions: session.metadata.deliveryInstructions,
+        product_type: session.metadata.productType,
+        created_at: new Date(),
         status: 'completed',
       };
 /*MongoDb
@@ -146,9 +146,7 @@ app.get('/success', async (req, res) => {
       console.error('Error al guardar el pedido en Supabase:', error);
       return res.status(500).send('Error al guardar el pedido en la base de datos.');
       }
-
-      console.log('Pedido guardado exitosamente en Supabase:', data);
-      res.redirect('/success'); // Redirigir a la página de agradecimiento
+      res.redirect('/gracias'); // Redirigir a la página de agradecimiento
     } else {
       res.status(400).send('El pago no fue exitoso.');
     }
@@ -161,7 +159,7 @@ app.get('/success', async (req, res) => {
 
 // Página de agradecimiento
 app.get('/gracias', (req, res) => {
-  res.redirect('success');
+  res.render('success');
 });
 
 app.get('/cancel', async (req, res) => {
